@@ -68,19 +68,53 @@ User *User::signUp()
             cin >> user_input;
         }
 
-        if (user_input == 1)
-        {
-            signUp();
+        if (user_input == 1){ signUp(); }
+        else if (user_input == 2) {logIn();}
+    }
+
+    //get height and weight
+    cout << "What is your weight in pounds:\n";
+    cin >> weight;
+    while (cin.fail()){
+        cout << "invalid input, please try agian: ";
+        cin >> weight;
+        if (weight > 400 || weight < 50){
+            cout << "Is this your real weight? You really need to workout...";
         }
-        else if (user_input == 2)
-        {
-            logIn();
+    }
+
+    cout << "How tall are you in feet:\n";
+    cin >> height;
+    while (cin.fail()){
+        cout << "invalid input, please try agian: ";
+        cin >> height;
+    }
+
+    // get score
+    cout << "What is your exercise goal level? Please select one of the following options:\n";
+    cout << "1. Beginner\n";
+    cout << "2. Intermediate\n";
+    cout << "3. Expert\n";
+    cout << "Enter your choice (1/2/3): " << endl;
+    int levelChoice;
+    cin >> levelChoice;
+    while (cin.fail()){
+        cout << "invalid input, please try agian: ";
+        cin >> levelChoice;
+        if (levelChoice == 1){
+            score = 0;
+        }else if(levelChoice == 2){
+            score = 100;
+        }else if(levelChoice == 3){
+            score = 200;
         }
     }
 
     // write the new user to the csv file
     ofstream file("users.csv", ios::app);
-    file << userName << "," << password << "," << "," << "\n";
+    file << userName << "," << password << "," 
+         << score << "," << height << "," 
+         << weight << "\n";
     file.close();
 
     cout << "Sign-up successful!" << endl;
@@ -99,7 +133,7 @@ User *User::logIn()
     {
         cout << endl
              << "\nLogin successful! Welcome back, " << userName << "." << endl;
-        readVecCSV();
+        readCSV();
         User *new_user = new User(userName, password);
         return new_user;
     }
@@ -129,130 +163,92 @@ User *User::logIn()
 }
 
 
-
-void User::readVecCSV()
+void User::readCSV()
 {
     ifstream inputFile("users.csv");
-    if (!inputFile.is_open())
-    {
+    if (!inputFile.is_open()) {
         cerr << "Error: Could not open CSV file for reading." << endl;
         return;
     }
+
     string line, token;
-    while (getline(inputFile, line))
-    {
+    while (getline(inputFile, line)) {
         stringstream ss(line);
         vector<string> row;
-        while (getline(ss, token, ','))
-        {
+
+        // Split the line into tokens based on the comma delimiter
+        while (getline(ss, token, ',')) {
             row.push_back(token);
         }
 
         // Check if the row corresponds to the current user
-        if (row.size() >= 4 && row[0] == userName)
-        {
-            // Parse searching history vector
-            stringstream searchHistStream(row[2]);
-            while (getline(searchHistStream, token, ';'))
-            {
-                searchingHistory_vec.push_back(stoi(token));
-            }
-
-            // Parse favorite recipe vector
-            stringstream favStream(row[3]);
-            while (getline(favStream, token, ';'))
-            {
-                favoriteRecipe_vec.push_back(stoi(token));
+        if (row.size() >= 5 && row[0] == userName) {
+            try {
+                // Assign score, height, and weight
+                score = stoi(row[2]);
+                height = stof(row[3]);
+                weight = stof(row[4]);
+            } catch (const invalid_argument& e) {
+                cerr << "Error: Invalid data format for user: " << userName << endl;
+                continue;
+            } catch (const out_of_range& e) {
+                cerr << "Error: Data out of range for user: " << userName << endl;
+                continue;
             }
         }
     }
+
     inputFile.close();
 }
 
-void User::writeVecCSV(vector<int> &vec)
-{
-    ifstream inputFile("users.csv");
-    if (!inputFile.is_open())
-    {
+void User::updateCSV() {
+    string fileName = "users.csv";
+    ifstream inputFile(fileName);
+    if (!inputFile.is_open()) {
         cerr << "Error: Could not open CSV file for reading." << endl;
         return;
     }
-    vector<string> lines;
-    string line;
-    while (getline(inputFile, line))
-    {
-        lines.push_back(line);
-    }
-    inputFile.close();
 
-    // Prepare to write updated data
-    ofstream outputFile("users.csv");
-    if (!outputFile.is_open())
-    {
+    vector<vector<string>> data;  // Store the entire CSV content
+    string line, token;
+
+    // Read the CSV file
+    while (getline(inputFile, line)) {
+        stringstream ss(line);
+        vector<string> row;
+
+        // Parse each row into tokens
+        while (getline(ss, token, ',')) {
+            row.push_back(token);
+        }
+
+        // Update the user's information if the username matches
+        if (row.size() >= 5 && row[0] == userName) {
+            row[2] = to_string(score);  // Update score
+            row[3] = to_string(height); // Update height
+            row[4] = to_string(weight); // Update weight
+        }
+
+        data.push_back(row);  // Add the row (modified or unmodified) to the data vector
+    }
+
+    inputFile.close();  // Close the input file
+
+    // Write the updated data back to the CSV file
+    ofstream outputFile(fileName);
+    if (!outputFile.is_open()) {
         cerr << "Error: Could not open CSV file for writing." << endl;
         return;
     }
-    for (size_t i = 0; i < lines.size(); ++i)
-    {
-        stringstream ss(lines[i]);
-        string token;
-        vector<string> columns;
 
-        // Split the line into columns
-        while (getline(ss, token, ','))
-        {
-            columns.push_back(token);
+    for (const auto& row : data) {
+        for (size_t i = 0; i < row.size(); ++i) {
+            outputFile << row[i];
+            if (i < row.size() - 1) outputFile << ',';  // Add comma except for the last column
         }
-
-        // Ensure the line has at least 4 columns
-        if (columns.size() < 4)
-        {
-            while (columns.size() < 4)
-            {
-                columns.push_back(""); // Fill missing columns with empty strings
-            }
-        }
-
-        if (vec == searchingHistory_vec)
-        {
-            // Update the third column if the vector has a corresponding value
-            if (i < vec.size())
-            {
-                columns[2] = to_string(vec[i]);
-            }
-        }
-        else if (vec == favoriteRecipe_vec)
-        {
-            if (i < vec.size())
-            {
-                columns[3] = to_string(vec[i]);
-            }
-        }
-
-        // Reassemble the line
-        string updatedLine = columns[0];
-        for (size_t j = 1; j < columns.size(); ++j)
-        {
-            updatedLine += "," + columns[j];
-        }
-
-        // Write the updated line to the output file
-        outputFile << updatedLine << endl;
+        outputFile << '\n';
     }
 
-    outputFile.close();
-}
-
-void User::printRecipe(const vector<int> &vec, const vector<Recipe *> &book)
-{
-    if (vec.empty())
-    {
-        cout << "\nStart searching your favorite recipes!" << endl;
-        return;
-    }
-    for (size_t i = 0; i < vec.size(); ++i)
-    {
-        Recipe *recipe_ptr = book[vec[i]];
-        recipe_ptr->viewRecipe();
-    }
+    outputFile.close();  // Close the output file
+    cout << "CSV file updated successfully." << endl;
 }
