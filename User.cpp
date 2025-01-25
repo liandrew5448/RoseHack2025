@@ -3,7 +3,6 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <vector>
 #include <string>
 
 using namespace std;
@@ -95,7 +94,7 @@ User *User::signUp()
     cout << "1. Beginner\n";
     cout << "2. Intermediate\n";
     cout << "3. Expert\n";
-    cout << "Enter your choice (1/2/3): " << endl;
+    cout << "Enter your choice (1/2/3): \n" << endl;
     int levelChoice;
     cin >> levelChoice;
     while (cin.fail()){
@@ -109,6 +108,9 @@ User *User::signUp()
             score = 200;
         }
     }
+    cout <<"Your starting score is: " << score << "!\n";
+    cout << "Think of an ideal score as your goal! \n Enter: ";
+    cin >> goal;
 
     // write the new user to the csv file
     ofstream file("users.csv", ios::app);
@@ -148,7 +150,6 @@ User *User::logIn()
             cout << "Your input is invalid. Please input again: ";
             cin >> user_input;
         }
-
         if (user_input == 1)
         {
             signUp();
@@ -182,12 +183,13 @@ void User::readCSV()
         }
 
         // Check if the row corresponds to the current user
-        if (row.size() >= 5 && row[0] == userName) {
+        if (row.size() >= 6 && row[0] == userName) {
             try {
                 // Assign score, height, and weight
                 score = stoi(row[2]);
                 height = stof(row[3]);
                 weight = stof(row[4]);
+                goal = stof(row[5]);
             } catch (const invalid_argument& e) {
                 cerr << "Error: Invalid data format for user: " << userName << endl;
                 continue;
@@ -227,6 +229,7 @@ void User::updateCSV() {
             row[2] = to_string(score);  // Update score
             row[3] = to_string(height); // Update height
             row[4] = to_string(weight); // Update weight
+            row[5] = to_string(goal);
         }
 
         data.push_back(row);  // Add the row (modified or unmodified) to the data vector
