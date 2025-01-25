@@ -1,2 +1,4 @@
 /free-exercise-db
- users.csv
+users.csv
+exercises.csv
+.DS_Store
