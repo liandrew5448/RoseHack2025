@@ -54,27 +54,25 @@ void Interface::handleChoice(int choice)
     case 1:
         Output::clearScreen();
         // Create new weekly workout plan."
+        cout << "test1";
         break;
     case 2:
         Output::clearScreen();
         // check in
+        cout << "test2";
         break;
     case 3:
         Output::clearScreen();
         // view current plan
-
+        cout << "test3";
         break;
     case 4:
         Output::clearScreen();
         // check score
+        cout << "test4";
         cout << "\nYoure current score is: " << currentUser.getScore() << endl;
         break;
     case 5:
-        Output::clearScreen();
-        // Workout dictionary.
-        
-        break;
-    case 6:
         Output::clearScreen();
         cout << "\nExiting Program" << endl;
         isRunning = false;

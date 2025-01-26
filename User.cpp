@@ -72,22 +72,47 @@ User *User::signUp()
     }
 
     //get height and weight
-    cout << endl << "What is your weight in pounds:\n";
+    cout << endl << "What is your weight in kilograms:\n";
     cin >> weight;
     while (cin.fail()){
-        cout << "invalid input, please try agian: ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "invalid input, what is your weight in kilograms: ";
         cin >> weight;
-        if (weight > 400 || weight < 50){
-            cout << "Is this your real weight? You really need to workout...";
+    }
+    if (weight > 400 || weight < 50){
+        cout << "Is this your real weight? You really need to workout...";
+    }
+
+    cout << endl << "How tall are you in meters:\n";
+    cin >> height;
+    while (true){
+         if (cin.fail()) {
+            cin.clear(); // Clear the error state
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
+            cout << "Invalid input, please try again." << endl;
+            continue; // Retry the loop
+        }
+
+        if (height > 2.3) {
+            cout << "\nHold on! The unit is METER... you sure your height is " << height << "?" << endl;
+            cout << "If not, what is your height in METERS?" << endl;
+            cin.clear(); // Clear the error state
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
+            cin >> height;
+            continue; // Prompt for input again
+        }
+
+        if (height > 0 && height <= 2.3) {
+            break; // Exit the loop
+        } else {
+            cout << "Height must be a positive value in METERS. What is your height in METERS?" << endl;
+            cin.clear(); // Clear the error state
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
+            cin >> height;
         }
     }
 
-    cout << endl << "How tall are you in feet:\n";
-    cin >> height;
-    while (cin.fail()){
-        cout << "invalid input, please try agian: ";
-        cin >> height;
-    }
 
     // get score
     cout << endl << "What is your exercise goal level? Please select one of the following options:\n";
@@ -100,13 +125,14 @@ User *User::signUp()
     while (cin.fail()){
         cout << "invalid input, please try agian: ";
         cin >> levelChoice;
-        if (levelChoice == 1){
-            score = 0;
-        }else if(levelChoice == 2){
-            score = 100;
-        }else if(levelChoice == 3){
-            score = 200;
-        }
+    }
+    bmi = bmi_calculator(height, weight);
+    if (levelChoice == 1){
+        score = bmi;
+    }else if(levelChoice == 2){
+        score = bmi + 50;
+    }else if(levelChoice == 3){
+        score = bmi + 100;
     }
     cout <<"Your starting score is: " << score << "!\n";
     cout << "\nThink of an ideal score as your goal! \nEnter: ";
@@ -142,7 +168,7 @@ User *User::logIn()
     else
     {
         int user_input;
-        cout << "Invalid username or password, please try again. Input 1 for sign up and 2 for log in: ";
+        cout << "Invalid username or password, please try again. \nInput 1 for sign up and 2 for log in: ";
         cin >> user_input;
 
         while (cin.fail() || (user_input != 1 && user_input != 2))
