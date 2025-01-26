@@ -21,7 +21,10 @@ public:
     double getHeight() {return height;}
     double getWeight() {return weight;}
     int getGoal(){return goal;}
+
     bool userExist(const string&, const string& password = "");
+
+    double bmi_calculator(double& h, double& w){return bmi = w / (h*h);};
 
     User();
     User(string&, string&);
@@ -33,4 +36,5 @@ private:
     double height, weight;
     int score = 0;
     int goal = 0;
+    double bmi = 0.0;
 };
