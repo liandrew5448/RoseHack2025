@@ -54,9 +54,9 @@ void workout::createWorkout() {
     int score = entity.getScore();  // Assume getScore() gets the score
     
     // Extract the hundreds digit to determine how many exercises per region
-    int hundredsDigit = score / 100;  // Integer division by 100 to get the hundreds digit
+    int hundredsDigit = (score / 100) + 1;  // Integer division by 100 to get the hundreds digit
     
-    // For a score of 230, hundredsDigit will be 2 (2 exercises per region)
+    // For a score of 230, hundredsDigit will be 3 (3 exercises per region)
     cout << "Selecting " << hundredsDigit << " exercises for each body region based on score of " << score << endl;
     
     // Randomly select exercises for each body part category
@@ -71,8 +71,8 @@ void workout::createWorkout() {
 }
 
 // Helper function to search through CSV file
-bool workout::search_csv(const string& file_name, const string& search_primaryMuscles, const string& search_level) {
-    ifstream file(file_name);
+bool workout::search_csv(const string& search_primaryMuscles, const string& search_level) {
+    ifstream file("users.csv");
     string line;
 
     // Check if the file is open
