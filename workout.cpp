@@ -28,7 +28,7 @@ void workout::reset() {
 }
 
 // Helper function for random exercise selection
-string workout::getRandomExercise(const vector<string>& bodyPartList, const string& level, const string& file_name) {
+string workout::getRandomExercise(const vector<string>& bodyPartList, const string& level) {
     // Randomly select a body part from the list
     int randomIndex = rand() % bodyPartList.size();
     string bodyPart = bodyPartList[randomIndex];
@@ -41,8 +41,7 @@ string workout::getRandomExercise(const vector<string>& bodyPartList, const stri
 
 // Find workout function (searches for workouts in the CSV based on primaryMuscles and level)
 void workout::findWorkout(const string& bodyPart, const string& level) {
-    string file_name = "exercises.csv";  // CSV file name
-    bool found = search_csv(file_name, bodyPart, level);
+    bool found = search_csv(bodyPart, level);
     
     if (!found) {
         cout << "No workout found for body part: " << bodyPart << " and level: " << level << endl;
