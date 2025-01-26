@@ -12,11 +12,15 @@ public:
     User* logIn();
     User* signUp();
     
-    void readVecCSV();
-    void writeVecCSV(vector<int>&);
+    void readCSV();
+    void updateCSV();
 
     string getUserName() {return userName;}
     string getUserPassword() {return password;}
+    int getScore() {return score;}
+    double getHeight() {return height;}
+    double getWeight() {return weight;}
+    int getGoal(){return goal;}
     bool userExist(const string&, const string& password = "");
 
     User();
@@ -27,5 +31,5 @@ private:
     string userName = "";
     string password = "";
     double height, weight;
-    int score;
+    int score, goal;
 };

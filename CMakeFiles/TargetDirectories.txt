@@ -1,0 +1,3 @@
+/Applications/CS/C++/rosehack25/RoseHack2025/CMakeFiles/RoseHack.dir
+/Applications/CS/C++/rosehack25/RoseHack2025/CMakeFiles/edit_cache.dir
+/Applications/CS/C++/rosehack25/RoseHack2025/CMakeFiles/rebuild_cache.dir
