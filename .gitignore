@@ -1,3 +1,8 @@
 /free-exercise-db
 .DS_Store
  .vscode/
+cmake_install.cmake
+Makefile
+RoseHack
+CMakeCache.txtt
+exercises.csv

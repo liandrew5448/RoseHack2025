@@ -1,4 +1,5 @@
 #include "User.h"
+#include "workout.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
