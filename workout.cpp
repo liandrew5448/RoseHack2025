@@ -11,7 +11,6 @@
 
 using namespace std;
 
-
 // Constructor
 workout::workout() {
     upperBody = {"biceps", "chest", "forearms", "shoulders", "triceps"};
@@ -34,14 +33,13 @@ string workout::getRandomExercise(const vector<string>& bodyPartList, const stri
     string bodyPart = bodyPartList[randomIndex];
     
     // Call findWorkout and search for exercises matching the body part and level
-    findWorkout(bodyPart, level);  // You may want to capture the result and do something with it
+    findWorkout(bodyPart, level, file_name);  // You may want to capture the result and do something with it
     
     return bodyPart;
 }
 
 // Find workout function (searches for workouts in the CSV based on primaryMuscles and level)
-void workout::findWorkout(const string& bodyPart, const string& level) {
-    string file_name = "exercises.csv";  // CSV file name
+void workout::findWorkout(const string& bodyPart, const string& level, const string& file_name) {
     bool found = search_csv(file_name, bodyPart, level);
     
     if (!found) {
@@ -62,11 +60,11 @@ void workout::createWorkout() {
     // Randomly select exercises for each body part category
     for (int i = 0; i < hundredsDigit; ++i) {
         // Select an exercise for upper body
-        getRandomExercise(upperBody, "intermediate", "exercises.csv");  // "intermediate" is an example level
+        getRandomExercise(upperBody, "intermediate", "exercises_filtered2.csv");  // "intermediate" is an example level
         // Select an exercise for core and back
-        getRandomExercise(coreAndBack, "intermediate", "exercises.csv");
+        getRandomExercise(coreAndBack, "intermediate", "exercises_filtered2.csv");
         // Select an exercise for lower body
-        getRandomExercise(lowerBody, "intermediate", "exercises.csv");
+        getRandomExercise(lowerBody, "intermediate", "exercises_filtered2.csv");
     }
 }
 
