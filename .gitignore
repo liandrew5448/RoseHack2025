@@ -1,3 +1,17 @@
 /free-exercise-db
 .DS_Store
- .vscode/
+.vscode/
+CMakeFiles/RoseHack.dir/compiler_depend.internal
+CMakeFiles/RoseHack.dir/workout.cpp.o
+RoseHack
+exercises_filtered.csv
+CMakeFiles/Makefile.cmake
+CMakeFiles/Progress/1
+CMakeFiles/Progress/2
+CMakeFiles/Progress/3
+CMakeFiles/Progress/4
+CMakeFiles/Progress/5
+CMakeFiles/Progress/count.txt
+CMakeFiles/RoseHack.dir/User.cpp.o
+CMakeFiles/RoseHack.dir/compiler_depend.make
+CMakeFiles/RoseHack.dir/workout.cpp.o.d

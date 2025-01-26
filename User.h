@@ -31,5 +31,6 @@ private:
     string userName = "";
     string password = "";
     double height, weight;
-    int score, goal;
+    int score = 0;
+    int goal = 0;
 };

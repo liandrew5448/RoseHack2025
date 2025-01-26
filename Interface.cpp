@@ -44,8 +44,7 @@ void Interface::displayMenu()
          << "\n\t2. Check in for today's work out."
          << "\n\t3. View my current weekly workout plan."
          << "\n\t4. Check my current score."
-         << "\n\t5. Workout dictionary."
-         << "\n\t6. Exit.\n";
+         << "\n\t5. Exit.\n";
 }
 
 void Interface::handleChoice(int choice)

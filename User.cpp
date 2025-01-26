@@ -49,9 +49,9 @@ bool User::userExist(const string &name, const string &password)
 
 User *User::signUp()
 {
-    cout << "What's your user name (please input letters/special characters/numbers without space): ";
+    cout << endl << "What's your user name (please input letters/special characters/numbers without space): \n";
     cin >> userName;
-    cout << "What's your password (please input letters/special characters/numbers without space): ";
+    cout << endl << "What's your password (please input letters/special characters/numbers without space): \n";
     cin >> password;
 
     // Check if the user already exists
@@ -72,7 +72,7 @@ User *User::signUp()
     }
 
     //get height and weight
-    cout << "What is your weight in pounds:\n";
+    cout << endl << "What is your weight in pounds:\n";
     cin >> weight;
     while (cin.fail()){
         cout << "invalid input, please try agian: ";
@@ -82,7 +82,7 @@ User *User::signUp()
         }
     }
 
-    cout << "How tall are you in feet:\n";
+    cout << endl << "How tall are you in feet:\n";
     cin >> height;
     while (cin.fail()){
         cout << "invalid input, please try agian: ";
@@ -90,11 +90,11 @@ User *User::signUp()
     }
 
     // get score
-    cout << "What is your exercise goal level? Please select one of the following options:\n";
+    cout << endl << "What is your exercise goal level? Please select one of the following options:\n";
     cout << "1. Beginner\n";
     cout << "2. Intermediate\n";
     cout << "3. Expert\n";
-    cout << "Enter your choice (1/2/3): \n" << endl;
+    cout << "Enter your choice (1/2/3):" << endl;
     int levelChoice;
     cin >> levelChoice;
     while (cin.fail()){
@@ -109,7 +109,7 @@ User *User::signUp()
         }
     }
     cout <<"Your starting score is: " << score << "!\n";
-    cout << "Think of an ideal score as your goal! \n Enter: ";
+    cout << "\nThink of an ideal score as your goal! \nEnter: ";
     cin >> goal;
 
     // write the new user to the csv file
